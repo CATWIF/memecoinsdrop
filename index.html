@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -356,9 +357,32 @@
     <img src="./assets/img/circles.png" />
   </div>
   <div id="bottom-bar">SPONSORED BY STINK</div>
+  <script>
+    // Verificar el ancho de la ventana al cargar la página
+    window.onload = function() {
+      checkWindowWidth();
+    };
 
+    // Verificar el ancho de la ventana al cambiar su tamaño
+    window.onresize = function() {
+      checkWindowWidth();
+    };
+
+    // Función para mostrar el mensaje si la ventana es demasiado pequeña
+    function checkWindowWidth() {
+      var messageContainer = document.getElementById('mobile-message');
+      if (window.innerWidth < 768) {
+        messageContainer.style.display = 'block';
+      } else {
+        messageContainer.style.display = 'none';
+      }
+    }
+  </script>
+  <div id="mobile-message" style="display: none; text-align: center; padding: 20px;">
+    This website is only available for PC.
+  </div>
   <script type="text/javascript" src="./matter.js"></script>
   <script type="text/javascript" src="./index.js?v=4"></script>
-
+ 
 </body>
 </html>
