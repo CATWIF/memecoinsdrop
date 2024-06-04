@@ -256,16 +256,11 @@ const Game = {
         
                 Game.sounds[`pop${bodyA.sizeIndex}`].play();
                 Composite.remove(engine.world, [bodyA, bodyB]);
-        
-                // Create the new fruit body immediately
-                const newFruit = Game.generateFruitBody(midPosX, midPosY, newSize);
-                Composite.add(engine.world, newFruit);
-        
+                Composite.add(engine.world, Game.generateFruitBody(midPosX, midPosY, newSize));
                 Game.addPop(midPosX, midPosY, bodyA.circleRadius);
                 Game.calculateScore();
             }
-        });
-        
+        });        
 		
 	},
 
@@ -351,19 +346,12 @@ const engine = Engine.create();
 const runner = Runner.create();
 const render = Render.create({
     element: Game.elements.canvas,
-    engine: engine,
+    engine,
     options: {
         width: Game.width,
         height: Game.height,
         wireframes: false,
         background: '#fff',
-        showVelocity: false,
-        showCollisions: false,
-        showBroadphase: false,
-        showDebug: false,
-        showPerformance: false,
-        showSleeping: false,
-        pixelRatio: window.devicePixelRatio // Ensures rendering at correct resolution
     }
 });
 
