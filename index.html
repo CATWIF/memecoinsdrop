@@ -246,76 +246,24 @@
     }
 
     @media (max-width: 768px) {
-      #game-score-container {
-        top: 5px;
-        left: 5px;
-        font-size: 5vw;
+      /* Ocultar todo el contenido en dispositivos móviles */
+      .container,
+      #game-canvas,
+      #game-score-container,
+      #game-next-container,
+      #game-end-container,
+      #game-status,
+      #circle-image-container,
+      #bottom-bar {
+        display: none;
       }
-
-      #game-score-label {
-        font-size: 2.5vw;
-      }
-
-      #game-next-container {
-        top: 5px;
-        right: 5px;
-        font-size: 2.5vw;
-      }
-
-      #game-next-fruit {
-        width: 8vw;
-        height: 8vw;
-      }
-
-      #game-end-title {
-        font-size: 10vw;
-      }
-
-      #game-end-link {
-        font-size: 5vw;
-      }
-
-      .game-status-label {
-        font-size: 3vw;
-      }
-
-      #game-highscore-value {
-        font-size: 5vw;
-      }
-    }
-
-    @media (max-width: 480px) {
-      #game-score-container {
-        font-size: 7vw;
-      }
-
-      #game-score-label {
-        font-size: 3vw;
-      }
-
-      #game-next-container {
-        font-size: 3vw;
-      }
-
-      #game-next-fruit {
-        width: 12vw;
-        height: 12vw;
-      }
-
-      #game-end-title {
-        font-size: 12vw;
-      }
-
-      #game-end-link {
-        font-size: 6vw;
-      }
-
-      .game-status-label {
-        font-size: 4vw;
-      }
-
-      #game-highscore-value {
-        font-size: 7vw;
+      
+      #overlay {
+        display: block; /* Mostrar un overlay indicando que la página solo está disponible para PC */
+        text-align: center;
+        padding: 20px;
+        color: white;
+        font-size: 20px;
       }
     }
   </style>
@@ -357,27 +305,7 @@
     <img src="./assets/img/circles.png" />
   </div>
   <div id="bottom-bar">SPONSORED BY STINK</div>
-  <script>
-    // Verificar el ancho de la ventana al cargar la página
-    window.onload = function() {
-      checkWindowWidth();
-    };
 
-    // Verificar el ancho de la ventana al cambiar su tamaño
-    window.onresize = function() {
-      checkWindowWidth();
-    };
-
-    // Función para mostrar el mensaje si la ventana es demasiado pequeña
-    function checkWindowWidth() {
-      var messageContainer = document.getElementById('mobile-message');
-      if (window.innerWidth < 768) {
-        messageContainer.style.display = 'block';
-      } else {
-        messageContainer.style.display = 'none';
-      }
-    }
-  </script>
   <div id="mobile-message" style="display: none; text-align: center; padding: 20px;">
     This website is only available for PC.
   </div>
