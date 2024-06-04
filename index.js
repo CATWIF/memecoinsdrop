@@ -217,50 +217,55 @@ const Game = {
 		
 
 		Events.on(engine, 'collisionStart', function (e) {
-			for (let i = 0; i < e.pairs.length; i++) {
-				const { bodyA, bodyB } = e.pairs[i];
-		
-				// Skip if collision is wall
-				if (bodyA.isStatic || bodyB.isStatic) continue;
-		
-				const aY = bodyA.position.y + bodyA.circleRadius;
-				const bY = bodyB.position.y + bodyB.circleRadius;
-		
-				// Uh oh, too high!
-				if (aY < loseHeight || bY < loseHeight) {
-					Game.loseGame();
-					return;
-				}
-		
-				// Skip different sizes
-				if (bodyA.sizeIndex !== bodyB.sizeIndex) continue;
-		
-				// Skip if already popped
-				if (bodyA.popped || bodyB.popped) continue;
-		
-				let newSize = bodyA.sizeIndex + 1;
-		
-				// Go back to smallest size
-				if (bodyA.circleRadius >= Game.fruitSizes[Game.fruitSizes.length - 1].radius) {
-					newSize = 0;
-				}
-		
-				Game.fruitsMerged[bodyA.sizeIndex] += 1;
-		
-				// Therefore, circles are same size, so merge them.
-				const midPosX = (bodyA.position.x + bodyB.position.x) / 2;
-				const midPosY = (bodyA.position.y + bodyB.position.y) / 2;
-		
-				bodyA.popped = true;
-				bodyB.popped = true;
-		
-				Game.sounds[`pop${bodyA.sizeIndex}`].play();
-				Composite.remove(engine.world, [bodyA, bodyB]);
-				Composite.add(engine.world, Game.generateFruitBody(midPosX, midPosY, newSize));
-				Game.addPop(midPosX, midPosY, bodyA.circleRadius);
-				Game.calculateScore();
-			}
-		});
+            for (let i = 0; i < e.pairs.length; i++) {
+                const { bodyA, bodyB } = e.pairs[i];
+        
+                // Skip if collision is wall
+                if (bodyA.isStatic || bodyB.isStatic) continue;
+        
+                const aY = bodyA.position.y + bodyA.circleRadius;
+                const bY = bodyB.position.y + bodyB.circleRadius;
+        
+                // Uh oh, too high!
+                if (aY < loseHeight || bY < loseHeight) {
+                    Game.loseGame();
+                    return;
+                }
+        
+                // Skip different sizes
+                if (bodyA.sizeIndex !== bodyB.sizeIndex) continue;
+        
+                // Skip if already popped
+                if (bodyA.popped || bodyB.popped) continue;
+        
+                let newSize = bodyA.sizeIndex + 1;
+        
+                // Go back to smallest size
+                if (bodyA.circleRadius >= Game.fruitSizes[Game.fruitSizes.length - 1].radius) {
+                    newSize = 0;
+                }
+        
+                Game.fruitsMerged[bodyA.sizeIndex] += 1;
+        
+                // Therefore, circles are same size, so merge them.
+                const midPosX = (bodyA.position.x + bodyB.position.x) / 2;
+                const midPosY = (bodyA.position.y + bodyB.position.y) / 2;
+        
+                bodyA.popped = true;
+                bodyB.popped = true;
+        
+                Game.sounds[`pop${bodyA.sizeIndex}`].play();
+                Composite.remove(engine.world, [bodyA, bodyB]);
+        
+                // Create the new fruit body immediately
+                const newFruit = Game.generateFruitBody(midPosX, midPosY, newSize);
+                Composite.add(engine.world, newFruit);
+        
+                Game.addPop(midPosX, midPosY, bodyA.circleRadius);
+                Game.calculateScore();
+            }
+        });
+        
 		
 	},
 
@@ -346,12 +351,19 @@ const engine = Engine.create();
 const runner = Runner.create();
 const render = Render.create({
     element: Game.elements.canvas,
-    engine,
+    engine: engine,
     options: {
         width: Game.width,
         height: Game.height,
         wireframes: false,
         background: '#fff',
+        showVelocity: false,
+        showCollisions: false,
+        showBroadphase: false,
+        showDebug: false,
+        showPerformance: false,
+        showSleeping: false,
+        pixelRatio: window.devicePixelRatio // Ensures rendering at correct resolution
     }
 });
 
