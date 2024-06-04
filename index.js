@@ -177,7 +177,7 @@ const Game = {
 		});
 		Composite.add(engine.world, horizontalLine);
 	
-		setTimeout(() => {
+        setTimeout(() => {
 			Game.stateIndex = GameStates.READY;
 		}, 250);
 	
@@ -303,6 +303,7 @@ const Game = {
 
     generateFruitBody: function (x, y, sizeIndex, extraConfig = {}) {
         const size = Game.fruitSizes[sizeIndex];
+        y += 50;
         const circle = Bodies.circle(x, y, size.radius, {
             ...friction,
             ...extraConfig,
