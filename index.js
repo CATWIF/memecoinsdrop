@@ -352,7 +352,7 @@ const render = Render.create({
         width: Game.width,
         height: Game.height,
         wireframes: false,
-        background: '#fff',
+        background: './assets/img/bg-menu-66.jpg',
     }
 });
 
