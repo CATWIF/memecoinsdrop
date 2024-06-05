@@ -64,6 +64,7 @@ const Game = {
         pop10: new Audio('./assets/pop10.mp3'),
     },
 
+   
     stateIndex: GameStates.MENU,
 
     score: 0,
@@ -133,15 +134,24 @@ const Game = {
         Game.fruitsMerged = Array.apply(null, Array(Game.fruitSizes.length)).map(() => 0);
 
         const menuMouseDown = function () {
-            if (mouseConstraint.body === null || mouseConstraint.body?.label !== 'btn-start') {
+            if (mouseConstraint.body === null) {
                 return;
             }
-
-            Events.off(mouseConstraint, 'mousedown', menuMouseDown);
-            Game.startGame();
-
+        
+            // Check if the clicked button is the start button
+            if (mouseConstraint.body.label === 'btn-start') {
+                Events.off(mouseConstraint, 'mousedown', menuMouseDown);
+                disableDarkMode();
+                Game.startGame();
+            }
+        
+            // Check if the clicked button is the stink button
+            if (mouseConstraint.body.label === 'btn-stink') {
+                Events.off(mouseConstraint, 'mousedown', menuMouseDown);
+                enableDarkMode();
+                Game.startGame();
+            }
         }
-
         Events.on(mouseConstraint, 'mousedown', menuMouseDown);
     },
 
@@ -373,10 +383,16 @@ const menuStatics = [
     }),
 
     // Start button in the center
-    Bodies.rectangle(Game.width / 2, Game.height / 2, 512, 96, {
+    Bodies.rectangle(Game.width / 2, Game.height / 2.8, 512, 96, {
         isStatic: true,
         label: 'btn-start',
         render: { sprite: { texture: './assets/img/btn-start.png' } },
+    }),
+
+    Bodies.rectangle(Game.width / 2, Game.height / 1.8, 512, 96, {
+        isStatic: true,
+        label: 'btn-stink',
+        render: { sprite: { texture: './assets/img/btn-stink.png' } },
     }),
 ];
 
@@ -413,6 +429,35 @@ const mouseConstraint = MouseConstraint.create(engine, {
     },
 });
 render.mouse = mouse;
+
+const startButton = document.querySelector('.container'); // Selecciona el contenedor principal del juego
+const darkModeSong = new Audio('./assets/background-music.mp3');
+darkModeSong.loop = true;
+// Función para cambiar al modo oscuro y comenzar el juego
+function enableDarkMode() {
+    document.body.classList.add('dark-mode'); // Agrega la clase dark-mode al cuerpo
+    document.body.style.background = '#1c104b'; // Cambia el color de fondo del cuerpo a oscuro
+    document.getElementById('top-bar').style.backgroundColor = '#000'; // Cambia el color de fondo de la barra superior
+    document.getElementById('bottom-bar').style.backgroundColor = '#000'; // Cambia el color de fondo de la barra inferior
+    document.getElementById('bottom-bar').style.backgroundColor = '#000'
+    // Otros estilos de juego que desees cambiar para el modo oscuro
+    render.options.background = './assets/img/flames.gif'
+    darkModeSong.play();
+    // Comienza el juego
+  
+}
+
+// Función para cambiar al modo normal y comenzar el juego
+function disableDarkMode() {
+    document.body.style.background = 'linear-gradient(to bottom, rgb(230, 0, 122, 1), rgb(254, 254, 254))'; // Cambia el fondo a un gradiente lineal
+    document.getElementById('top-bar').style.backgroundColor = 'rgba(0, 178, 255, 1)'; // Restablece el color de fondo de la barra superior
+    document.getElementById('bottom-bar').style.backgroundColor = 'rgba(86, 243, 154, 1)'; // Restablece el color de fondo de la barra inferior
+    // Otros estilos de juego que desees restablecer al modo normal
+   
+    // Comienza el juego
+   
+}
+
 
 Game.initGame();
 
@@ -459,6 +504,7 @@ const resizeCanvas = () => {
         overlay.style.display = 'none';
     }, 0);
 };
+
 
 document.body.onload = resizeCanvas;
 window.onresize = resizeCanvas;

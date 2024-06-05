@@ -3,12 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>MEMECOIN DROP</title>
   <meta property="og:title" content="MEMECOINS DROP sponsored by STINK"/>
-
-   <link rel="icon" href="./assets/img/circle4.png" type="image/png">
-  
+  <link rel="icon" href="./assets/img/circle4.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
@@ -245,6 +242,28 @@
       height: auto;
     }
 
+  .dark-mode .dark-mode-image1 {
+  content: url('./assets/img/dark-mode-img1.png');
+  position: absolute;
+  top: 50px;
+  left: 100px;
+  display: block;
+}
+
+.dark-mode .dark-mode-image2 {
+  content: url('./assets/img/dark-mode-img2.png');
+  position: absolute;
+  top: 200px;
+  left: 300px;
+  display: block;
+}
+
+/* Ocultar imágenes por defecto */
+.dark-mode-image1,
+.dark-mode-image2 {
+  display: none;
+}
+
     @media (max-width: 768px) {
       /* Ocultar todo el contenido en dispositivos móviles */
       .container,
@@ -266,6 +285,12 @@
         font-size: 20px;
       }
     }
+    .dark-mode #game-score-container,
+  .dark-mode #game-next-container,
+.dark-mode #game-status, 
+.dark-mode #circle-image-container{
+    display: none;
+}
   </style>
 </head>
 <body>
@@ -281,8 +306,11 @@
     <span id="game-next-label">NEXT</span>
     <img id="game-next-fruit" src="./assets/img/circle4.png" />
   </div>
-
+  <div id="mobile-message" style="display: none; text-align: center; padding: 20px;">
+    This website is only available for PC.
+  </div>
   <div class="container">
+  
     <div id="game-canvas">
       <div id="game-ui">
         <div id="game-end-container">
@@ -302,15 +330,15 @@
   </div>
     
   <div id="circle-image-container">
-    <img src="./assets/img/circles.png" />
+    <img src="./assets/img/circles2.png" />
   </div>
   <div id="bottom-bar">SPONSORED BY STINK</div>
+  
 
-  <div id="mobile-message" style="display: none; text-align: center; padding: 20px;">
-    This website is only available for PC.
-  </div>
-  <script type="text/javascript" src="./matter.js"></script>
+   <script type="text/javascript" src="./matter.js"></script>
   <script type="text/javascript" src="./index.js?v=4"></script>
+  
+
  
 </body>
 </html>
