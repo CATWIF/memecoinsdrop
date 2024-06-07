@@ -224,7 +224,41 @@ const Game = {
 					break;
 			}
 		});
-		
+		// Add touch control support
+document.addEventListener('touchstart', function (e) {
+    if (Game.stateIndex === GameStates.READY) {
+        const touch = e.touches[0];
+        const touchX = touch.clientX - render.canvas.getBoundingClientRect().left;
+        
+        if (Game.elements.previewBall) {
+            Game.elements.previewBall.position.x = touchX;
+        }
+    }
+});
+
+document.addEventListener('touchmove', function (e) {
+    if (Game.stateIndex === GameStates.READY) {
+        const touch = e.touches[0];
+        const touchX = touch.clientX - render.canvas.getBoundingClientRect().left;
+        
+        if (Game.elements.previewBall) {
+            Game.elements.previewBall.position.x = touchX;
+        }
+    }
+});
+
+document.addEventListener('touchend', function (e) {
+    if (Game.stateIndex === GameStates.READY && Game.elements.previewBall) {
+        const touch = e.changedTouches[0];
+        const touchX = touch.clientX - render.canvas.getBoundingClientRect().left;
+
+        Game.addFruit(touchX);
+    }
+});
+
+document.getElementById('top-bar').addEventListener('click', function() {
+    window.location.href = '/'; // Reemplaça amb l'URL de la pàgina principal
+  });
 
 		Events.on(engine, 'collisionStart', function (e) {
             for (let i = 0; i < e.pairs.length; i++) {
