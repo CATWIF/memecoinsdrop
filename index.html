@@ -265,8 +265,7 @@
 }
 
     @media (max-width: 768px) {
-      /* Ocultar todo el contenido en dispositivos móviles */
-      
+      /* Ocultar contenido en dispositivos móviles */ 
       #game-score-container,
       #game-next-container,
       #game-end-container,
@@ -278,13 +277,6 @@
         display: none;
       }
       
-      #overlay {
-        display: block; /* Mostrar un overlay indicando que la página solo está disponible para PC */
-        text-align: center;
-        padding: 20px;
-        color: white;
-        font-size: 20px;
-      }
     }
     .dark-mode #game-score-container,
   .dark-mode #game-next-container,
@@ -306,9 +298,6 @@
   <div id="game-next-container">
     <span id="game-next-label">NEXT</span>
     <img id="game-next-fruit" src="./assets/img/circle4.png" />
-  </div>
-  <div id="mobile-message" style="display: none; text-align: center; padding: 20px;">
-    This website is only available for PC.
   </div>
   <div class="container">
   
