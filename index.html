@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MEMECOIN DROP</title>
-  <meta property="og:title" content="MEMECOINS DROP sponsored by STINK"/>
+  <title>HYDRATION DROP</title>
+  <meta property="og:title" content="HYDRATION DROP sponsored by STINK"/>
   <link rel="icon" href="./assets/img/circle4.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -76,7 +76,6 @@
       padding-top: 50px; /* Alçada de la top bar */
       padding-bottom: 50px; /* Alçada de la bottom bar */
     }
-
 
     #game-canvas {
       position: relative;
@@ -210,7 +209,6 @@
       z-index: 500;
       flex-direction: column;
     }
-  
 
     .game-status-item {
       display: flex;
@@ -231,6 +229,7 @@
       font-weight: 700;
       font-size: 2vw;
     }
+
     #circle-image-container {
       position: fixed; 
       bottom: 100px; 
@@ -243,30 +242,56 @@
       height: auto;
     }
 
-  .dark-mode .dark-mode-image1 {
-  content: url('./assets/img/dark-mode-img1.png');
-  position: absolute;
-  top: 50px;
-  left: 100px;
-  display: block;
-}
+    .dark-mode .dark-mode-image1 {
+      content: url('./assets/img/dark-mode-img1.png');
+      position: absolute;
+      top: 50px;
+      left: 100px;
+      display: block;
+    }
 
-.dark-mode .dark-mode-image2 {
-  content: url('./assets/img/dark-mode-img2.png');
-  position: absolute;
-  top: 200px;
-  left: 300px;
-  display: block;
-}
+    .dark-mode .dark-mode-image2 {
+      content: url('./assets/img/dark-mode-img2.png');
+      position: absolute;
+      top: 200px;
+      left: 300px;
+      display: block;
+    }
 
-/* Ocultar imágenes por defecto */
-.dark-mode-image1,
-.dark-mode-image2 {
-  display: none;
-}
+    /* Ocultar imágenes por defecto */
+    .dark-mode-image1,
+    .dark-mode-image2 {
+      display: none;
+    }
 
     @media (max-width: 768px) {
       /* Ocultar contenido en dispositivos móviles */ 
+      body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, rgb(230, 0, 122, 1), rgb(254, 254, 254));
+        }
+
+        #container {
+         
+       
+            height: 80vh;
+        }
+
+        #game-canvas {
+            width: 80vw; /* Utilitzem unitats relatives */
+           
+            height: 80vw; /* Mantenim la relació d'aspecte */
+         
+        }
+
+        #game-ui {
+            width: 80vw; /* Utilitzem unitats relatives */
+        
+            max-height: 960px; /* Limit de mida del joc */
+          
+        }
       #game-score-container,
       #game-next-container,
       #game-end-container,
@@ -280,17 +305,21 @@
       
     }
     .dark-mode #game-score-container,
-  .dark-mode #game-next-container,
-.dark-mode #game-status, 
-.dark-mode #circle-image-container{
-    display: none;
-}
+    .dark-mode #game-next-container,
+    .dark-mode #game-status, 
+    .dark-mode #circle-image-container {
+        display: none;
+    }
+    
+    .sexymode #circle-image-container {
+      display: none;
+    }
   </style>
 </head>
 <body>
   <div id="overlay"></div>
 
-  <div id="top-bar">MEMECOINS DROP</div>
+  <div id="top-bar">HYDRATION DROP</div>
 
   <div id="game-score-container">
     <span id="game-score-label">SCORE</span>
@@ -304,6 +333,7 @@
   
     <div id="game-canvas">
       <div id="game-ui">
+       
         <div id="game-end-container">
           <div id="game-end">
             <div id="game-end-title">Game Over!</div>
@@ -320,16 +350,13 @@
     </div>
   </div>
     
-  <div id="circle-image-container">
-    <img src="./assets/img/circles2.png" />
-  </div>
+  
   <div id="bottom-bar">SPONSORED BY STINK</div>
   
 
    <script type="text/javascript" src="./matter.js"></script>
   <script type="text/javascript" src="./index.js?v=4"></script>
   
-
  
 </body>
 </html>

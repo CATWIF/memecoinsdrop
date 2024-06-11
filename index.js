@@ -35,6 +35,49 @@ const GameStates = {
     LOSE: 3,
 };
 
+const sexymodeSounds = {
+    click: new Audio('./assets/click.mp3'),
+    pop0: new Audio('./assets/xpop0.mp3'),
+    pop1: new Audio('./assets/xpop1.mp3'),
+    pop2: new Audio('./assets/xpop2.mp3'),
+    pop3: new Audio('./assets/xpop3.mp3'),
+    pop4: new Audio('./assets/xpop4.mp3'),
+    pop5: new Audio('./assets/xpop5.mp3'),
+    pop6: new Audio('./assets/xpop6.mp3'),
+    pop7: new Audio('./assets/xpop7.mp3'),
+    pop8: new Audio('./assets/xpop8.mp3'),
+    pop9: new Audio('./assets/xpop9.mp3'),
+    pop10: new Audio('./assets/xpop10.mp3'),
+};
+
+const lightModeSounds = {
+    click: new Audio('./assets/click.mp3'),
+    pop0: new Audio('./assets/pop0.mp3'),
+    pop1: new Audio('./assets/pop1.mp3'),
+    pop2: new Audio('./assets/pop2.mp3'),
+    pop3: new Audio('./assets/pop3.mp3'),
+    pop4: new Audio('./assets/pop4.mp3'),
+    pop5: new Audio('./assets/pop5.mp3'),
+    pop6: new Audio('./assets/pop6.mp3'),
+    pop7: new Audio('./assets/pop7.mp3'),
+    pop8: new Audio('./assets/pop8.mp3'),
+    pop9: new Audio('./assets/pop9.mp3'),
+    pop10: new Audio('./assets/pop10.mp3'),
+};
+
+const sexymodeImages = [
+    './assets/img/x1.png',
+    './assets/img/x2.png',
+    './assets/img/x3.png',
+    './assets/img/x4.png',
+    './assets/img/x5.png',
+    './assets/img/x6.png',
+    './assets/img/x7.png',
+    './assets/img/x8.png',
+    './assets/img/x9.png',
+    './assets/img/x10.png'
+]
+
 const Game = {
     width: 640,
     height: 960,
@@ -64,6 +107,7 @@ const Game = {
         pop10: new Audio('./assets/pop10.mp3'),
     },
 
+    
    
     stateIndex: GameStates.MENU,
 
@@ -97,6 +141,20 @@ const Game = {
     setNextFruitSize: function () {
         Game.nextFruitSize = Math.floor(rand() * 5);
         Game.elements.nextFruitImg.src = `./assets/img/circle${Game.nextFruitSize}.png`;
+
+// Busca l'índex de la mida de fruita en la llista de mides de fruites
+
+let nextFruitIndex;
+
+// Comprova si estàs en mode sexymode
+if (document.body.classList.contains('sexymode')) {
+    nextFruitIndex = Game.fruitSizes.findIndex(size => size.radius === Game.fruitSizes[Game.nextFruitSize].radius);
+    Game.elements.nextFruitImg.src = sexymodeImages[nextFruitIndex];
+} else {
+    // Si no estàs en mode sexymode, utilitza la imatge normal de fruita
+    nextFruitIndex = Game.nextFruitSize;
+    Game.elements.nextFruitImg.src = `./assets/img/circle${nextFruitIndex}.png`;
+}
     },
 
     showHighscore: function () {
@@ -151,6 +209,13 @@ const Game = {
                 enableDarkMode();
                 Game.startGame();
             }
+            if (mouseConstraint.body.label === 'btn-sexy') {
+                Events.off(mouseConstraint, 'mousedown', menuMouseDown);
+                enableSexymode(); // Habilitar el sexymode y empezar el juego
+                Game.startGame()
+
+            }
+            
         }
         Events.on(mouseConstraint, 'mousedown', menuMouseDown);
     },
@@ -417,16 +482,21 @@ const menuStatics = [
     }),
 
     // Start button in the center
-    Bodies.rectangle(Game.width / 2, Game.height / 2.8, 512, 96, {
+    Bodies.rectangle(Game.width / 2, Game.height / 3, 512, 96, {
         isStatic: true,
         label: 'btn-start',
         render: { sprite: { texture: './assets/img/btn-start.png' } },
     }),
 
-    Bodies.rectangle(Game.width / 2, Game.height / 1.8, 512, 96, {
+    Bodies.rectangle(Game.width / 2, Game.height / 2.1, 512, 96, {
         isStatic: true,
         label: 'btn-stink',
         render: { sprite: { texture: './assets/img/btn-stink.png' } },
+    }),
+    Bodies.rectangle(Game.width / 2, Game.height / 1.6, 512, 96, {
+        isStatic: true,
+        label: 'btn-sexy',
+        render: { sprite: { texture: './assets/img/btn-sexy.png' } },
     }),
 ];
 
@@ -467,7 +537,63 @@ render.mouse = mouse;
 const startButton = document.querySelector('.container'); // Selecciona el contenedor principal del juego
 const darkModeSong = new Audio('./assets/background-music.mp3');
 darkModeSong.loop = true;
+
+function enableSexymode() {
+    document.body.classList.add('sexymode');
+    document.body.style.background = '#FF69B4'; // Color de fondo sexy
+    document.getElementById('top-bar').style.backgroundColor = '#FF1493'; // Color del top bar
+    document.getElementById('bottom-bar').style.backgroundColor = '#FF1493'; // Color del bottom bar
+
+    // Cambiar sonidos a los de sexymode
+    Game.sounds = sexymodeSounds;
+
+    // Update fruit sizes with sexy mode images
+    Game.fruitSizes.forEach((size, index) => {
+        if (sexymodeImages[index]) {
+            size.img = sexymodeImages[index];
+        }
+    });
+
+    // Update the preview image
+    const nextFruitIndex = Game.nextFruitSize;
+    if (sexymodeImages[nextFruitIndex]) {
+        Game.elements.nextFruitImg.src = sexymodeImages[nextFruitIndex];
+    }
+
+    // Update the preview ball image if it exists
+    if (Game.elements.previewBall) {
+        const currentFruitIndex = Game.currentFruitSize;
+        if (sexymodeImages[currentFruitIndex]) {
+            Game.elements.previewBall.render.sprite.texture = sexymodeImages[currentFruitIndex];
+        }
+    }
+
+    // Update existing fruit bodies in the world with sexy mode images
+    Composite.allBodies(engine.world).forEach(body => {
+        if (body.label === 'Circle Body') {
+            const sizeIndex = body.sizeIndex;
+            if (sexymodeImages[sizeIndex]) {
+                body.render.sprite.texture = sexymodeImages[sizeIndex];
+            }
+        }
+    });
+
+    // Empezar el juego después de habilitar el sexymode
+}
+
+
+// Función para desactivar el Sexymode
+function disableSexymode() {
+    document.body.style.background = 'linear-gradient(to bottom, rgb(230, 0, 122, 1), rgb(254, 254, 254))';
+    document.getElementById('top-bar').style.backgroundColor = 'rgba(0, 178, 255, 1)';
+    document.getElementById('bottom-bar').style.backgroundColor = 'rgba(86, 243, 154, 1)';
+
+    // Revertir sonidos al modo normal
+    Game.sounds = lightModeSounds;
+}
+
 // Función para cambiar al modo oscuro y comenzar el juego
+
 function enableDarkMode() {
     document.body.classList.add('dark-mode'); // Agrega la clase dark-mode al cuerpo
     document.body.style.background = '#1c104b'; // Cambia el color de fondo del cuerpo a oscuro
