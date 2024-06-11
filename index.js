@@ -543,12 +543,9 @@ function enableSexymode() {
     document.body.style.background = '#FF69B4'; // Color de fondo sexy
     document.getElementById('top-bar').style.backgroundColor = '#FF1493'; // Color del top bar
     document.getElementById('bottom-bar').style.backgroundColor = '#FF1493'; // Color del bottom bar
-    if (newSize === Game.fruitSizes.length - 1) {
-        // Reproduir la cançó en mode sexymode
-        if (document.body.classList.contains('sexymode')) {
-            const lastCircleSound = new Audio('./assets/stink.mp3');
-            lastCircleSound.play();
-        }
+   
+        
+        
     // Cambiar sonidos a los de sexymode
     Game.sounds = sexymodeSounds;
 
@@ -583,6 +580,8 @@ function enableSexymode() {
         }
     });
 
+    const lastCircleSound = new Audio('./assets/stink.mp3');
+    lastCircleSound.play();
     // Empezar el juego después de habilitar el sexymode
 }
 
